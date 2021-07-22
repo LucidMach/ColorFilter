@@ -12,7 +12,7 @@ if sys.argv[1] == "red":
     pic_red[:, :, 1] = 0
     pic_red[:, :, 2] = 0
     data = Image.fromarray(pic_red)
-    data.save("./output/red.png")
+    data.save("./output/image.png")
     sys.exit()
 
 if sys.argv[1] == "green":
@@ -20,7 +20,7 @@ if sys.argv[1] == "green":
     pic_green[:, :, 0] = 0
     pic_green[:, :, 2] = 0
     data = Image.fromarray(pic_green)
-    data.save("./output/green.png")
+    data.save("./output/image.png")
     sys.exit()
 
 if sys.argv[1] == "blue":
@@ -28,26 +28,26 @@ if sys.argv[1] == "blue":
     pic_blue[:, :, 0] = 0
     pic_blue[:, :, 1] = 0
     data = Image.fromarray(pic_blue)
-    data.save("./output/blue.png")
+    data.save("./output/image.png")
     sys.exit()
 
 if sys.argv[1] == "yellow":
     pic_yellow = pic_arr.copy()
     pic_yellow[:, :, 2] = 0
     data = Image.fromarray(pic_yellow)
-    data.save("./output/yellow.png")
+    data.save("./output/image.png")
     sys.exit()
 
 if sys.argv[1] == "pink":
     pic_pink = pic_arr.copy()
     pic_pink[:, :, 1] = 0
     data = Image.fromarray(pic_pink)
-    data.save("./output/pink.png")
+    data.save("./output/image.png")
     sys.exit()
 
 if sys.argv[1] == "cyan":
     pic_cyan = pic_arr.copy()
     pic_cyan[:, :, 0] = 0
     data = Image.fromarray(pic_cyan)
-    data.save("./output/cyan.png")
+    data.save("./output/image.png")
     sys.exit()

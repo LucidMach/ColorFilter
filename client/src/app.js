@@ -8,6 +8,7 @@ const url = "http://127.0.0.1:8000/filter";
 
 const App = () => {
   const [color, setColor] = useState("gray");
+  const [filtered, setFiltered] = useState(false);
 
   const colorClick = (color) => {
     setColor(color);
@@ -25,9 +26,10 @@ const App = () => {
 
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
+    console.log(imageSrc);
     axios
       .post(url, { image: imageSrc, color })
-      .then((data) => console.log(data))
+      .then((data) => console.log(data.data.image))
       .catch((err) => console.log(err));
   }, [webcamRef, color]);
 

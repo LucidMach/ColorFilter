@@ -44,7 +44,7 @@ app.post("/filter", (req, res) => {
   });
 
   // Adding Heading and converting image to base64
-  const image = `data:image/png;base64${fs.readFileSync("./output/image.png", {
+  const image = `data:image/png;base64,${fs.readFileSync("./output/image.png", {
     encoding: "base64",
   })}`;
 

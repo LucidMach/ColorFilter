@@ -6,7 +6,7 @@ const Nav = () => {
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",
-    padding: "1rem",
+    padding: "0 0 1rem",
   };
 
   const iconStyle = {
@@ -21,10 +21,12 @@ const Nav = () => {
         alt="logo"
         style={{ borderRadius: "10px" }}
       />
-      <h1 style={{ color: "#f1f1f1", fontSize: "2.5rem", margin: "0 2rem" }}>
+      <h1 style={{ color: "#f1f1f1", fontSize: "2.5rem", margin: "0 1rem" }}>
         Color Filter
       </h1>
-      <div style={{ padding: "0 1rem", display: "flex", alignItems: "center" }}>
+      <div
+        style={{ padding: "0 0.25rem", display: "flex", alignItems: "center" }}
+      >
         <a target="_" href="https://github.com/lucidmach/colorfilter">
           <svg
             style={iconStyle}

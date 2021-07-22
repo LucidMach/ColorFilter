@@ -36,7 +36,7 @@ const App = () => {
       <Nav />
       <main style={mainStyle}>
         Choose Color Filter
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", margin: "0 0 0.5rem 0" }}>
           <div
             className="color red"
             style={{ background: "#f10101" }}
@@ -77,7 +77,9 @@ const App = () => {
           style={{ border: `5px solid ${color}` }}
           audio={false}
           ref={webcamRef}
+          mirrored={true}
           screenshotFormat="image/png"
+          videoConstraints={{ facingMode: "user" }}
         />
         <div
           style={{

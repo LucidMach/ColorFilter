@@ -19,8 +19,11 @@ app.get("/", (req, res) => {
 });
 
 app.post("/filter", (req, res) => {
+  // Extracting Image from Client
   const body = req.body;
+  // Removing Header from base64 string [header,image] = base64 image
   const base64Image = req.body.image.split(";base64,").pop();
+  // Saving Image to Disk
   fs.writeFileSync("input/image.png", base64Image, { encoding: "base64" });
 
   // for extracting data from the callback inside py.stdout.on() in line 15

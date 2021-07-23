@@ -16,17 +16,18 @@ const App = () => {
   const pyImage = useRef();
 
   useEffect(() => {
-    if (color !== "gray") {
+    if (color !== "gray" && !filtered) {
       const imageSrc = webcamRef.current.getScreenshot();
-      setFiltered(true);
       axios
         .post(url, { image: imageSrc, color })
         .then((data) => {
+          setColor("gray");
           setImage(data.data.image);
+          setFiltered(true);
         })
         .catch((err) => console.log(err));
     }
-  }, [color]);
+  }, [color, filtered]);
 
   const mainStyle = {
     display: "flex",

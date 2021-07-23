@@ -1,18 +1,32 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import axios from "axios";
 
 import Nav from "./components/nav";
+import ColorForm from "./components/colorForm";
 
 const url = "http://127.0.0.1:8000/filter";
 
 const App = () => {
   const [color, setColor] = useState("gray");
   const [filtered, setFiltered] = useState(false);
+  const [image, setImage] = useState(null);
 
-  const colorClick = (color) => {
-    setColor(color);
-  };
+  const webcamRef = useRef();
+  const pyImage = useRef();
+
+  useEffect(() => {
+    if (color !== "gray") {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setFiltered(true);
+      axios
+        .post(url, { image: imageSrc, color })
+        .then((data) => {
+          setImage(data.data.image);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [color]);
 
   const mainStyle = {
     display: "flex",
@@ -22,96 +36,52 @@ const App = () => {
     height: window.innerHeight - 80,
   };
 
-  const webcamRef = useRef();
-
-  const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    console.log(imageSrc);
-    axios
-      .post(url, { image: imageSrc, color })
-      .then((data) => console.log(data.data.image))
-      .catch((err) => console.log(err));
-  }, [webcamRef, color]);
-
   return (
     <>
       <Nav />
       <main style={mainStyle}>
-        Choose Color Filter
-        <div style={{ display: "flex", margin: "0 0 0.5rem 0" }}>
-          <div
-            className="color red"
-            style={{ background: "#f10101" }}
-            onClick={() => colorClick("red")}
-          ></div>
-          <div
-            className="color"
-            value="green"
-            style={{ background: "#01f101" }}
-            onClick={() => colorClick("green")}
-          ></div>
-          <div
-            className="color"
-            value="blue"
-            style={{ background: "#0101f1" }}
-            onClick={() => colorClick("blue")}
-          ></div>
-          <div
-            className="color"
-            value="yellow"
-            style={{ background: "#f1f101" }}
-            onClick={() => colorClick("yellow")}
-          ></div>
-          <div
-            className="color"
-            value="meganta"
-            style={{ background: "#f101f1" }}
-            onClick={() => colorClick("pink")}
-          ></div>
-          <div
-            className="color"
-            value="cyan"
-            style={{ background: "#01f1f1" }}
-            onClick={() => colorClick("cyan")}
-          ></div>
-        </div>
-        <Webcam
-          style={{ border: `5px solid ${color}` }}
-          audio={false}
-          ref={webcamRef}
-          mirrored={true}
-          screenshotFormat="image/png"
-          videoConstraints={{ facingMode: "user" }}
-        />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <button
-            style={{
-              border: "none",
-              padding: "0.5rem 2rem",
-              background: "#1a1a1a",
-              color: "#f1f1f1",
-              margin: "0 1rem",
-            }}
-            onClick={capture}
-          >
-            SNAP
-          </button>
-          {/* <input
-            type="file"
-            style={{
-              background: "#1a1a1a",
-              color: "#f1f1f1",
-              margin: "0 1rem",
-            }}
-            onChange={(e) => console.log(e.target.value)}
-          /> */}
-        </div>
+        <ColorForm filtered={filtered} setColor={setColor} />
+        {filtered ? (
+          <>
+            <img ref={pyImage} src={image} alt="colored filtered input" />
+            <button
+              style={{
+                border: "none",
+                cursor: "pointer",
+                position: "absolute",
+                zIndex: 10,
+                bottom: 50,
+                padding: "0.125rem 1rem",
+                background: "#c1c1c1",
+                borderRadius: "0.25rem",
+              }}
+              onClick={() => {
+                setFiltered(false);
+                setImage(null);
+                setColor("gray");
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="#a1a1a1"
+              >
+                <path d="M13.5 2c-5.288 0-9.649 3.914-10.377 9h-3.123l4 5.917 4-5.917h-2.847c.711-3.972 4.174-7 8.347-7 4.687 0 8.5 3.813 8.5 8.5s-3.813 8.5-8.5 8.5c-3.015 0-5.662-1.583-7.171-3.957l-1.2 1.775c1.916 2.536 4.948 4.182 8.371 4.182 5.797 0 10.5-4.702 10.5-10.5s-4.703-10.5-10.5-10.5z" />
+              </svg>
+            </button>
+          </>
+        ) : (
+          <Webcam
+            style={{ border: `5px solid ${color}` }}
+            audio={false}
+            ref={webcamRef}
+            mirrored={true}
+            screenshotFormat="image/png"
+            videoConstraints={{ facingMode: "user" }}
+          />
+        )}
       </main>
     </>
   );

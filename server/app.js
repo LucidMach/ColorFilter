@@ -40,16 +40,17 @@ app.post("/filter", (req, res) => {
 
   // when the python child process ends
   py.on("close", (code) => {
-    console.log(code);
+    // Adding Heading and converting image to base64
+    const image = `data:image/png;base64,${fs.readFileSync(
+      "./output/image.png",
+      {
+        encoding: "base64",
+      }
+    )}`;
+
+    // sending image to client
+    res.json({ image });
   });
-
-  // Adding Heading and converting image to base64
-  const image = `data:image/png;base64,${fs.readFileSync("./output/image.png", {
-    encoding: "base64",
-  })}`;
-
-  // sending image to client
-  res.json({ image });
 });
 
 app.listen(port, () => console.log("..."));

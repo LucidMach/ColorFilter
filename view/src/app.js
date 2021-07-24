@@ -81,6 +81,8 @@ const App = () => {
             style={{
               width: camWidth,
               border: `5px solid ${color}`,
+              position: "relative",
+              bottom: window.innerWidth > 600 ? null : 50,
             }}
             audio={false}
             ref={webcamRef}

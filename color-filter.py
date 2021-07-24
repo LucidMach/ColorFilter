@@ -4,7 +4,7 @@ from PIL import Image
 
 print(sys.argv[1])
 
-pic = Image.open("./input/image.png")
+pic = Image.open("input/image.png")
 pic_arr = np.asarray(pic)
 
 if sys.argv[1] == "red":

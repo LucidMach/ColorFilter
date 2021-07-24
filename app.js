@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT ? process.env.PORT : 8000;
 
 // middlewares
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(bodyParser.json({ limit: "5mb" }));
 
 // home route
@@ -45,7 +45,6 @@ app.post("/filter", (req, res) => {
     })}`;
 
     // sending image to client
-    res.header("Access-Control-Allow-Origin", "*");
     res.json({ image });
   });
 });

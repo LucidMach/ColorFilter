@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Nav from "./components/nav";
 import ColorForm from "./components/colorForm";
+import Loading from "./components/loading";
 
 const url = "https://colorfilter.herokuapp.com/filter";
 // const url = "http://localhost:8000/filter";
@@ -12,12 +13,14 @@ const App = () => {
   const [color, setColor] = useState("gray");
   const [filtered, setFiltered] = useState(false);
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const webcamRef = useRef();
   const pyImage = useRef();
 
   useEffect(() => {
     if (color !== "gray" && !filtered) {
+      setLoading(true);
       const imageSrc = webcamRef.current.getScreenshot();
       axios
         .post(url, { image: imageSrc, color })
@@ -25,6 +28,7 @@ const App = () => {
           setColor("gray");
           setImage(data.data.image);
           setFiltered(true);
+          setLoading(false);
         })
         .catch((err) => console.log(err));
     }
@@ -43,6 +47,7 @@ const App = () => {
   return (
     <>
       <Nav />
+      {loading ? <Loading /> : null}
       <main style={mainStyle}>
         <ColorForm filtered={filtered} setColor={setColor} />
         {filtered ? (

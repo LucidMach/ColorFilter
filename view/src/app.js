@@ -76,7 +76,10 @@ const App = () => {
           </>
         ) : (
           <Webcam
-            style={{ border: `5px solid ${color}` }}
+            style={{
+              height: "100vh",
+              border: `5px solid ${color}`,
+            }}
             audio={false}
             ref={webcamRef}
             mirrored={true}

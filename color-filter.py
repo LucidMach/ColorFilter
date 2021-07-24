@@ -4,7 +4,7 @@ from PIL import Image
 
 print(sys.argv[1])
 
-pic = Image.open("input/image.png")
+pic = Image.open("./input/image.png")
 pic_arr = np.asarray(pic)
 
 if sys.argv[1] == "red":
@@ -51,3 +51,6 @@ if sys.argv[1] == "cyan":
     data = Image.fromarray(pic_cyan)
     data.save("./output/image.png")
     sys.exit()
+
+data = Image.fromarray(pic_arr)
+data.save("./output/image.png")

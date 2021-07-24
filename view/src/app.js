@@ -5,7 +5,8 @@ import axios from "axios";
 import Nav from "./components/nav";
 import ColorForm from "./components/colorForm";
 
-const url = "https://colorfilter.herokuapp.com/filter";
+// const url = "https://colorfilter.herokuapp.com/filter";
+const url = "http://localhost:8000/filter";
 
 const App = () => {
   const [color, setColor] = useState("gray");

@@ -30,6 +30,8 @@ const App = () => {
     }
   }, [color, filtered]);
 
+  const camWidth = window.innerWidth > 600 ? null : window.innerWidth;
+
   const mainStyle = {
     display: "flex",
     flexDirection: "column",
@@ -77,7 +79,7 @@ const App = () => {
         ) : (
           <Webcam
             style={{
-              height: "100vh",
+              width: camWidth,
               border: `5px solid ${color}`,
             }}
             audio={false}

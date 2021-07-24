@@ -24,7 +24,9 @@ app.post("/filter", (req, res) => {
   // Removing Header from base64 string [header,image] = base64 image
   const base64Image = req.body.image.split(";base64,").pop();
   // Saving Image to Disk
-  fs.writeFileSync("input/image.png", base64Image, { encoding: "base64" });
+  fs.writeFileSync(`${__dirname}/input/image.png`, base64Image, {
+    encoding: "base64",
+  });
 
   // for extracting data from the callback inside py.stdout.on() in line 15
   var data2send;
@@ -41,7 +43,7 @@ app.post("/filter", (req, res) => {
   py.on("close", () => {
     // Adding Heading and converting image to base64
     const image = `data:image/png;base64,${fs.readFileSync(
-      "./output/image.png",
+      `${__dirname}/output/image.png`,
       {
         encoding: "base64",
       }

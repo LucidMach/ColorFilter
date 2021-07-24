@@ -34,12 +34,11 @@ app.post("/filter", (req, res) => {
 
   // when python prints data onto the console
   py.stdout.on("data", function (data) {
-    console.log("Pipe Data From Python");
     data2send = data.toString();
   });
 
   // when the python child process ends
-  py.on("close", (code) => {
+  py.on("close", () => {
     // Adding Heading and converting image to base64
     const image = `data:image/png;base64,${fs.readFileSync(
       "./output/image.png",

@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT ? process.env.PORT : 8000;
 
 // middlewares
-app.use(cors({ origin: "*" }));
+app.use(cors());
 app.use(bodyParser.json({ limit: "5mb" }));
 
 // home route
